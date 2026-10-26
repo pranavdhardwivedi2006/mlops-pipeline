@@ -20,7 +20,7 @@ def main() :
 
 @app.get("/health")
 def health_check():
-    return {"message": "healthy"}
+    return {"status": "healthy"}
 
 @app.post("/predict")
 def predict(data : IrisRequest) :
