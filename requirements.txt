@@ -4,4 +4,5 @@ uvicorn
 joblib
 pydantic
 pytest
-httpx2
+httpx
+mlflow

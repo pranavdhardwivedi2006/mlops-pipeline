@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 import mlflow 
 import mlflow.sklearn 
+from mlflow.tracking import MlflowClient
 
 # Configure MLFlow Tracking
 # MLFlow server stores experiment metadata and model records
@@ -55,6 +56,12 @@ with mlflow.start_run() as run :
     precision = precision_score(y_test, y_pred, average = "macro", zero_division = 0)
     recall = recall_score(y_test, y_pred, average = "macro", zero_division = 0)
 
+    MIN_TEST_ACCURACY = 0.90
+    if accuracy < MIN_TEST_ACCURACY :
+        raise ValueError(
+            f'Model rejected: test accuracy: {accuracy:.2f} is below {MIN_TEST_ACCURACY}'
+        )
+
     # Log the evaluated results so that different runs can be compared
     mlflow.log_metrics({
         "test_accuracy" : accuracy,
@@ -82,8 +89,8 @@ with mlflow.start_run() as run :
     # Identify the current training run
     current_run_id = mlflow.active_run().info.run_id
     # Retrieve all the versions registered under this model name
-    registered_versions = client.serach_model_versions(
-        "name : 'iris-classifier'"
+    registered_versions = client.search_model_versions(
+        filter_string="name='iris-classifier'"
     )
 
     # find the version created by training run

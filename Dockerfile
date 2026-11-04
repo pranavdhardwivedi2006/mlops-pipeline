@@ -1,6 +1,6 @@
 # Pull the Python image from Docker Hub
 # Use a lightweight Pyhton image
-FROM python:3.14-slim
+FROM python:3.12-slim
 
 # set the working directory inside container
 WORKDIR /app
@@ -19,4 +19,4 @@ EXPOSE 8000
 
 # Start the API server when container is ready
 # 0.0.0.0 - allows connections through the container's network interface
-CMD ["uvicorn", "main:app", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8000"]
