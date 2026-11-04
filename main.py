@@ -60,7 +60,7 @@ def create_app(model_loader: Callable=load_mlflow_model, version_loader: Callabl
 
     app = FastAPI(
         title = "Iris model ",
-        description = "",
+        description = "Iris prediction API powered by MLFlow",
         version = "3.0.0",
         lifespan=lifespan
     )
@@ -94,4 +94,6 @@ def create_app(model_loader: Callable=load_mlflow_model, version_loader: Callabl
             'class_name' : ['setosa', 'versicolor', 'virginica'][prediction]
         }
 
-    
+    return app
+
+app = create_app()
